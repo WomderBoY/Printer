@@ -1,0 +1,13 @@
+This is a sample text file for the SimpleTextRenderer test.
+
+The purpose of this file is to provide a sufficiently long piece of text that will demonstrate the word-wrapping and pagination capabilities of the rendering engine. The Java AWT Graphics2D API provides powerful tools for text layout and measurement through the FontMetrics class. By calculating the width of each word and line, we can programmatically decide where to break lines to fit within the specified margins of our virtual paper.
+
+Here is a list of features we are testing:
+- Basic text drawing.
+- Correct font sizing based on DPI.
+- Word wrapping for long lines.
+- Pagination for content that spans multiple pages.
+- Margins on all four sides of the page.
+- Page number at the bottom.
+
+This process simulates what a real printer driver does when it receives a simple text document. It translates the abstract characters into a concrete grid of pixels (a bitmap) that the printer hardware can understand. Our virtual printer will then take this bitmap and save it as a PNG or embed it into a PDF.
