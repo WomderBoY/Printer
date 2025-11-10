@@ -56,6 +56,7 @@ public class PrinterUI extends Application {
         controller.setVirtualPrinter(virtualPrinter);
 
         // 3. Start the background worker thread
+        // 开启单线程轮询
         startBackgroundWorker();
 
         Scene scene = new Scene(root);
@@ -74,10 +75,11 @@ public class PrinterUI extends Application {
             logger.info("Background SpoolerWorker thread started.");
             try {
                 while (!Thread.currentThread().isInterrupted()) {
+                    // 单线程轮询
                     boolean workDone = spoolerWorker.processOneStep();
-                    // If no job was found, wait a bit to prevent busy-waiting
+                    // 无任务时休眠1秒
                     if (!workDone) {
-                        Thread.sleep(1000); // Poll every second
+                        Thread.sleep(1000);
                     }
                 }
             } catch (InterruptedException e) {

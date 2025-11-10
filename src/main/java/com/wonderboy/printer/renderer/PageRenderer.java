@@ -13,24 +13,23 @@ import java.io.IOException;
 public interface PageRenderer {
 
     /**
-     * Renders a single page from the given source document.
+     * 将文档渲染成位图
      *
-     * @param source The document source to render from.
-     * @param pageIndex The 0-based index of the page to render.
-     * @param settings The print settings to apply (DPI, paper size, etc.).
-     * @return A BufferedImage containing the rendered page.
-     * @throws IOException if an error occurs while reading from the source.
+     * @param source 源文件
+     * @param pageIndex 页码
+     * @param settings 打印设置
+     * @return 渲染得到的位图
+     * @throws IOException 读取源时发生错误
      */
     BufferedImage render(PageSource source, int pageIndex, PrintSettings settings) throws IOException;
 
     /**
-     * Calculates the total number of pages the document will have when rendered
-     * with the specified settings. This can be an expensive operation.
+     * 计算总页数
      *
-     * @param source The document source.
-     * @param settings The print settings that affect pagination.
-     * @return The total number of pages.
-     * @throws IOException if an error occurs while reading from the source.
+     * @param source 源文件
+     * @param settings 打印设置
+     * @return 总页数
+     * @throws IOException 读取源时发生错误
      */
     int getTotalPages(PageSource source, PrintSettings settings) throws IOException;
 }

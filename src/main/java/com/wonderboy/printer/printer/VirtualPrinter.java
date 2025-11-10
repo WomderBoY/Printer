@@ -35,7 +35,7 @@ public class VirtualPrinter {
 
     // A map to hold the pages for each active print job.
     // Key: Job ID, Value: A thread-safe list of rendered page images.
-//    private final Map<String, List<BufferedImage>> activeJobPages;
+    // private final Map<String, List<BufferedImage>> activeJobPages;
 
     private PagePrintListener pagePrintListener;
 

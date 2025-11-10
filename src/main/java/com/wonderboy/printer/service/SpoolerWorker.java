@@ -36,15 +36,16 @@ public class SpoolerWorker {
      * Returns true if any work was done.
      */
     public boolean processOneStep() {
-        // Priority 1: Handle user-confirmed print jobs (fast operation)
+        // 渲染与预览
         if (processNextPrintingJob()) {
             return true;
         }
-        // Priority 2: Handle new jobs that need rendering (slow operation)
+        // 打印
         return processNextQueuedJob();
     }
 
     private boolean processNextQueuedJob() {
+        // 查找状态为QUEUED的任务
         Optional<PrintJob> jobOptional = findFirstJobByStatus(PrintJobStatus.QUEUED);
         if (jobOptional.isEmpty()) return false;
 
@@ -52,12 +53,15 @@ public class SpoolerWorker {
         logger.info("Stage 1: Starting to render job for preview: {}", job.getJobId());
 
         try {
+            // 更新状态
             job.setStatus(PrintJobStatus.PREVIEWING);
             spoolerService.updateJob(job);
 
             PageSource source = new TextPageSource(Paths.get(job.getSourceFilePaths().getFirst()));
+            // 计算总页数
             int totalPages = renderer.getTotalPages(source, job.getSettings());
 
+            // 逐页调用渲染器进行渲染
             for (int i = 0; i < totalPages; i++) {
                 logger.info("Rendering page {} of {} for job {}", i + 1, totalPages, job.getJobId());
                 BufferedImage pageImage = renderer.render(source, i, job.getSettings());
@@ -65,6 +69,7 @@ public class SpoolerWorker {
             }
             logger.info("Finished rendering job {} for preview.", job.getJobId());
         } catch (Exception e) {
+            // 异常处理
             handleFailure(job, e);
         }
         return true;
@@ -78,11 +83,14 @@ public class SpoolerWorker {
         logger.info("Stage 2: Finalizing PDF for job: {}", job.getJobId());
 
         try {
+            // 调用virtual printer将位图生成PDF
             virtualPrinter.finishJob(job);
             job.setStatus(PrintJobStatus.COMPLETED);
+            // 更新状态
             spoolerService.updateJob(job);
             logger.info("Successfully completed job: {}", job.getJobId());
         } catch (Exception e) {
+            // 处理异常
             handleFailure(job, e);
         }
         return true;

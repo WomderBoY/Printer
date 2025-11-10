@@ -12,21 +12,21 @@ import java.io.IOException;
 public interface PageSource {
 
     /**
-     * Gets the total number of pages in this source document.
-     * @return The page count.
-     * @throws IOException if there is an error reading the source.
+     * 计算总页数
+     * @return 总页数
+     * @throws IOException 读取源时发生错误
      */
     int getPageCount() throws IOException;
 
     /**
-     * Renders a specific page of the document into a raster image.
-     * This is the core responsibility of the "Print Driver".
+     * 将文档转化为位图（“打印机”能理解的语言）
+     * 这是驱动程序的核心功能
      *
-     * @param pageIndex The 0-based index of the page to render.
-     * @param settings The print settings (like DPI) to use for rendering.
-     * @return A BufferedImage representing the rendered page.
-     * @throws IOException if there is an error rendering the page.
-     * @throws IndexOutOfBoundsException if the pageIndex is invalid.
+     * @param pageIndex 页数（0-based）
+     * @param settings 打印设置.
+     * @return BufferedImage 代表渲染后的页面
+     * @throws IOException 读取源时发生错误
+     * @throws IndexOutOfBoundsException 页码不合法
      */
     BufferedImage renderPage(int pageIndex, PrintSettings settings) throws IOException;
 

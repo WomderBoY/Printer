@@ -104,16 +104,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.6.0</version> <!-- 使用一个较新的版本 -->
+                <version>3.6.0</version>
                 <configuration>
                     <archive>
                         <manifest>
-                            <!-- 你的JavaFX启动类 -->
+
                             <mainClass>com.wonderboy.printer.Launcher</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
-                        <!-- 这个配置会创建一个包含所有依赖的jar包 -->
+
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                 </configuration>
